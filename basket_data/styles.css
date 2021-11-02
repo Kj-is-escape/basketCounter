@@ -1,0 +1,73 @@
+* {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+ 
+    /*
+      Introduced in IE 10.
+      See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: white;
+    color: black;
+}
+
+div {
+    display: flex;
+    font-family: 'Patrick Hand', cursive;
+    transition: all 2s;
+}
+
+.col{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center ;
+    padding: 5vh;
+    transition: all 2s;
+}
+
+.left {
+    width: 45%;
+}
+
+.right {
+    flex-grow: 0.40;
+    align-items: flex-start;
+}
+
+.main{
+    height: 100%;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.counter {
+    font-size: 50vh;
+}
+
+.timer {
+    font-size: 23vh;
+    opacity: 100;
+    transition: all 0.5s;
+}
+
+.max-score {
+    font-size: 0vh;
+    overflow: hidden;
+}
+
+.logo>img{
+    display: flex;
+}
+
+ 
