@@ -32,7 +32,7 @@
     }
   }
 
-  function timer(){
+  function startTimer(){
     var sec = 20;
     clearInterval(timerInterval);
     timerObj.innerHTML= "YA!!";
@@ -81,7 +81,7 @@
 
   document.addEventListener("keydown", (event) => {
     if( event.key == " " ){
-      timer();
+      startTimer();
     }
     else if (event.key == "d"){
       changeMode("dark");
