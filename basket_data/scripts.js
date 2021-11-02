@@ -16,18 +16,18 @@
 
   function changeMode( mode ){
     if(mode === "dark"){
-      document.body.style.backgroundColor = "white";
-      document.body.style.color = "black";
+      document.body.style.backgroundColor = "black";
+      document.body.style.color = "white";
       darkMode = false;
     }
     else if(mode === "light"){
-      document.body.style.backgroundColor = "black";
-      document.body.style.color = "white";
+      document.body.style.backgroundColor = "white";
+      document.body.style.color = "black";
       darkMode = true;
     }
     else {
-      document.body.style.backgroundColor = "red";
-      document.body.style.color = "black";
+      document.body.style.backgroundColor = "black";
+      document.body.style.color = "red";
       darkMode = false;
     }
   }
