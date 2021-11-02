@@ -2,11 +2,12 @@
 
 Simple online counter for basketball free throws.
   
-This website was built for a specific usage and its features are very limited.
+This website was built for a specific usage and its features are very limited.  
+To see the website itself go to [kj-is-escape.github.io/basketCounter/](https://kj-is-escape.github.io/basketCounter/)
 
 ## Usage
 
-This software is supposed to be used as part of a setup in wich a basketball hoop is connected to a mouse and scoring makes the mouse click.   
+This software is meant to be used as part of a setup in wich a basketball hoop is connected to a mouse and scoring makes the mouse click.   
 To start playing press the spacebar and a timer will start on the screen, when the timer runs off,  your score and the maximum score will be shown on screen.  
 To play again simply press the spacebar once again.  
   
@@ -17,10 +18,15 @@ To play again simply press the spacebar once again.
 
 ## Configuration
 
-The configuration is minimal and there are intentionally no hits on the screen.  
+The configuration is minimal and there are intentionally no hints on the screen.  
+
 Pressing A, S and D changes the colour mode of the page:
 * **D** is dark mode, black background and white letters.
 * **S** is light mode, white background and black letters.
 * **A** is board mode, using the same colours as a basketball board.  
 
 Pressing the C key opens a simple form to update the round and bounce time, the round time is the time each player has to play (in seconds), bounce time is the minimum time between two consecutive points (in milliseconds).
+
+## Downloading
+
+To download the page for offline viewing just download the code as a zip (Code>Download ZIP) and extract it somewhere, then open the index.html file with any browser (preferably firefox) and it should work.
