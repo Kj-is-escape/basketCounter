@@ -33,6 +33,21 @@ div {
     font-family: 'Seven Segment', cursive;
     transition: all 2s;
 }
+ 
+label {
+    display: flex;
+    font-family: 'Seven Segment', cursive;
+    transition: all 2s;
+}
+
+input {
+    display: flex;
+    font-family: 'Seven Segment', cursive;
+    transition: all 2s;
+    padding: 0;
+    min-width: 0;
+}
+
 
 .col{
     flex-direction: column;
@@ -79,4 +94,44 @@ div {
 
 .logo>img{
     display: flex;
+}
+
+.form{
+    overflow: hidden;
+    box-sizing: border-box;
+    max-width: 10000px;
+    align-items: center;
+}
+
+.collapsed.col{
+    max-width: 0px;
+    transition: max-width 2s;
+    transition-timing-function: linear;
+}
+
+.hidden{
+    display: none;
+}
+
+.form>* {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    width: 100%;
+}
+
+.form-group>*{
+    padding-right: 1em;
+}
+
+.submit-btn {
+    width: 100%;
+}
+
+/*couldn't center text, this will do */
+.btn {
+    text-align: center;
+    background-color: grey;
+    padding-left: 1em;
+    padding-right: 1em;
+    box-sizing: border-box;
 }
