@@ -1,7 +1,7 @@
 # Basket Counter
 
 Simple online counter for basketball free throws.
-
+  
 This website was built for a specific usage and its features are very limited.
 
 ## Usage
@@ -22,4 +22,5 @@ Pressing A, S and D changes the colour mode of the page:
 * **D** is dark mode, black background and white letters.
 * **S** is light mode, white background and black letters.
 * **A** is board mode, using the same colours as a basketball board.  
+
 Pressing the C key opens a simple form to update the round and bounce time, the round time is the time each player has to play (in seconds), bounce time is the minimum time between two consecutive points (in milliseconds).
