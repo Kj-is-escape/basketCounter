@@ -1,4 +1,4 @@
-# basketCounter
+# Basket Counter
 
 Simple online counter for basketball free throws.
 
