@@ -1,11 +1,20 @@
+@font-face {
+    font-family: 'Seven Segment';
+    src: url('SevenSegmentRegular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
 * {
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
     -webkit-user-select: none;
- 
+
     /*
-      Introduced in IE 10.
-      See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    Introduced in IE 10.
+    See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
     */
     -ms-user-select: none;
     user-select: none;
@@ -15,13 +24,13 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: red;
 }
 
 div {
     display: flex;
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Seven Segment', cursive;
     transition: all 2s;
 }
 
@@ -40,6 +49,7 @@ div {
 .right {
     flex-grow: 0.40;
     align-items: flex-start;
+    width: 40%;
 }
 
 .main{
@@ -58,7 +68,8 @@ div {
 .timer {
     font-size: 23vh;
     opacity: 100;
-    transition: all 0.5s;
+    transition: all 0.8s;
+    transition-timing-function: cubic-bezier(.43,.08,.56,.96);
 }
 
 .max-score {
@@ -69,5 +80,3 @@ div {
 .logo>img{
     display: flex;
 }
-
- 

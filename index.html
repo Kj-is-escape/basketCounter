@@ -2,97 +2,8 @@
   <head>
     <meta charset="utf-8"/>
     <title>BasketGame</title>
+    <link rel="preload" href="./basket_data/SevenSegmentRegular.woff" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="./basket_data/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet"> 
-    <style>
-
-      @font-face {
-          font-family: 'Seven Segment';
-          src: url('SevenSegmentRegular.woff') format('woff');
-          font-weight: normal;
-          font-style: normal;
-          font-display: swap;
-      }
-
-
-      * {
-          -moz-user-select: -moz-none;
-          -khtml-user-select: none;
-          -webkit-user-select: none;
-      
-          /*
-            Introduced in IE 10.
-            See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-          */
-          -ms-user-select: none;
-          user-select: none;
-      }
-
-      body {
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-          background-color: black;
-          color: red;
-      }
-
-      div {
-          display: flex;
-          font-family: 'Seven Segment', cursive;
-          transition: all 2s;
-      }
-
-      .col{
-          flex-direction: column;
-          justify-content: center;
-          align-items: center ;
-          padding: 5vh;
-          transition: all 2s;
-      }
-
-      .left {
-          width: 45%;
-      }
-
-      .right {
-          flex-grow: 0.40;
-          align-items: flex-start;
-          width: 40%;
-      }
-
-      .main{
-          height: 100%;
-          width: 100%;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-          flex-grow: 1;
-      }
-
-      .counter {
-          font-size: 50vh;
-      }
-
-      .timer {
-          font-size: 23vh;
-          opacity: 100;
-          transition: all 0.8s;
-          transition-timing-function: cubic-bezier(.43,.08,.56,.96);
-      }
-
-      .max-score {
-          font-size: 0vh;
-          overflow: hidden;
-      }
-
-      .logo>img{
-          display: flex;
-      }
-
- 
-    </style>
   </head>
   <body>
     <div class="main">
@@ -115,98 +26,11 @@
         </div>
       </div>
     </div>
+
+    <script src="./basket_data/scripts.js"></script>
   </body>
 </html>
 
-<script>
 
-  const restingTime = 500;
-  const timerObj = document.querySelector('.timer');
-  const scoreObj = document.querySelector('.counter');
-  const maxScoreObj = document.querySelector('.max-score');
-  var timerInterval; 
-  var resting;
-  var score = 0;
-  var maxScoreNum = 0;
-  var isRunning = false;
-  var darkMode = false;
-
-  function toggleDark(){
-    console.log( document.body.style.backgroundColor );
-    if(darkMode){
-      document.body.style.backgroundColor = "white";
-      document.body.style.color = "black";
-      darkMode = false;
-    }
-    else{
-      document.body.style.backgroundColor = "black";
-      document.body.style.color = "white";
-      darkMode = true;
-    }
-  }
-
-  function timer(){
-    var sec = 20;
-    clearInterval(timerInterval);
-    timerObj.innerHTML= "YA!!";
-    sec--;
-    isRunning = true;
-    maxScoreObj.style.fontSize="0vh";
-    score = 0;
-    scoreObj.innerHTML = "" + score;
-
-    timerInterval = setInterval( function(){
-        timerObj.innerHTML= "00:" + sec.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
-        sec--;
-        if (sec < 1) {
-            console.log(sec);
-            timerObj.style.fontSize="10vh";
-        }
-        if (sec < 0) {
-            clearInterval(timerInterval);
-            isRunning = false;
-            timerObj.innerHTML="TIEMPO";
-            timerObj.style.fontSize="23vh";
-            updateMaxScore(scoreObj.innerHTML);
-            maxScoreObj.innerHTML="Más alto: " + maxScoreNum;
-            maxScoreObj.style.fontSize="10vh";
-        }
-    }, 1000);
-  }
-
-  function updateMaxScore(newScore){
-    maxScoreNum = parseInt(newScore) > maxScoreNum ? newScore : maxScoreNum;
-    maxScoreObj.innerHTML = maxScoreNum;
-  }
-
-  function scoreInc(){
-    if(isRunning && !resting){
-      score++;
-      scoreObj.innerHTML = "" + score;
-      resting = true;
-      var bounce = setInterval( function () {
-        resting = false;
-        bounce = clearInterval(bounce);
-      }, restingTime)
-    }
-  }
-
-  document.body.addEventListener("click", scoreInc);
-
-  document.addEventListener("keydown", () => {
-    if( event.key == " " ){
-      timer();
-    }
-    else if (event.key == "D"){
-      toggleDark();
-    }
-    else {
-      console.log("help");
-    }
-
-  });
-
-
-</script>
 
 
