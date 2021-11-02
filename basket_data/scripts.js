@@ -55,6 +55,8 @@ function endRound(){
 
 function renderTimer(){
   timerObj.innerHTML = "00:" + roundTime;
+  roundInputObj.value = roundTime;
+  bounceInputObj.value = bouncingTime;
 }
 
 function updateMaxScore(newScore){
