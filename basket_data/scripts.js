@@ -1,6 +1,6 @@
 //configuration
-var bouncingTime = 1000;
-var roundTime = 20;
+var bouncingTime = 1500;
+var roundTime = 50;
 
 //html objects
 const timerObj = document.querySelector('.timer');
@@ -117,7 +117,10 @@ function changeMode( mode ){
 }
 
 //Event listeners
-document.body.addEventListener("click", scoreInc);
+document.body.addEventListener("contextmenu", (event) => {
+  event.preventDefault();
+  scoreInc();
+  });
 
 window.addEventListener("load", renderTimer);
 
