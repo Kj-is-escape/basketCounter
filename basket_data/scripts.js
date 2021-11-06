@@ -38,16 +38,16 @@ function startTimer(){
         timerObj.style.fontSize="10vh";
       }
       if (sec < 0) {
-        endRound();
+        endRound("TIEMPO");
       }
     }, 1000);
 }
 
-function endRound(){
+function endRound(message){
   clearInterval(timerInterval);
   isRunning = false;
   updateMaxScore(scoreObj.innerHTML);
-  timerObj.innerHTML="TIEMPO";
+  timerObj.innerHTML=message;
   timerObj.style.fontSize="23vh";
   maxScoreObj.innerHTML="Más alto: " + maxScoreNum;
   maxScoreObj.style.fontSize="10vh";
@@ -128,7 +128,7 @@ document.addEventListener("keydown", (event) => {
     startTimer();
   }
   if( event.key == "Escape" && isRunning){
-    stopTimer();
+    endRound("STOP");
   }
   else if (event.key == "d"){
     changeMode("dark");
