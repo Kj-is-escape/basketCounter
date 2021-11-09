@@ -1,6 +1,15 @@
+/* TODO: deshabilitar las teclas con la configuracion abierta
+*  agregar ratio button para cambiar el lado del click
+*  cambiar el eventListener si se cambia el lado del click
+*  (idea, sacar el event listener al abrir config y volverlo a poner)
+*/
+
+
 //configuration
 var bouncingTime = 1500;
 var roundTime = 50;
+var startKeyCode = " ";
+var stopKeyCode = "Escape";
 
 //html objects
 const timerObj = document.querySelector('.timer');
@@ -9,6 +18,8 @@ const maxScoreObj = document.querySelector('.max-score');
 const configObj = document.querySelector('.config');
 const bounceInputObj = document.querySelector('#bounceTime');
 const roundInputObj = document.querySelector('#roundTime');
+const startKeyCodeObj = document.querySelector('#startKeyCode');
+const stopKeyCodeObj = document.querySelector('#stopKeyCode');
 const submitConfigObj = document.querySelector('.submit-config');
 
 //state
@@ -18,7 +29,7 @@ var score = 0;
 var maxScoreNum = 0;
 var isRunning = false;
 var darkMode = false;
-
+var leftClickInc = false;
 
 
 function startTimer(){
@@ -57,6 +68,10 @@ function renderTimer(){
   timerObj.innerHTML = "00:" + roundTime;
   roundInputObj.value = roundTime;
   bounceInputObj.value = bouncingTime;
+  startKeyCodeObj.value = startKeyCode;
+  stopKeyCodeObj.value = stopKeyCode;
+  console.log(stopKeyCode, stopKeyCodeObj);
+  console.log(startKeyCode, startKeyCodeObj);
 }
 
 function updateMaxScore(newScore){
@@ -117,7 +132,7 @@ function changeMode( mode ){
 }
 
 //Event listeners
-document.body.addEventListener("contextmenu", (event) => {
+document.body.addEventListener( leftClickInc ? "click" : "contextmenu", (event) => {
   event.preventDefault();
   scoreInc();
   });
@@ -127,10 +142,10 @@ window.addEventListener("load", renderTimer);
 submitConfigObj.addEventListener("click", saveAndCloseConf);
 
 document.addEventListener("keydown", (event) => {
-  if( event.key == " " && !isRunning){
+  if( event.key == startKeyCode && !isRunning){
     startTimer();
   }
-  if( event.key == "Escape" && isRunning){
+  if( event.key == stopKeyCode && isRunning){
     endRound("STOP");
   }
   else if (event.key == "d"){
