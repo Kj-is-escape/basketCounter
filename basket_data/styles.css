@@ -178,6 +178,10 @@ p{
     margin-bottom: 0;
 }
 
+.file-btn{
+    border:solid black 1px;
+}
+
 @media (max-width: 900px) { 
     form>*{
         display: flex;
