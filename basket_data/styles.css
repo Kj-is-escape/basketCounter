@@ -130,8 +130,15 @@ input {
 /*couldn't center text, this will do */
 .btn {
     text-align: center;
-    background-color: grey;
+    background-color: gray;
+    color: black;
     padding-left: 1em;
     padding-right: 1em;
     box-sizing: border-box;
+    transition: background-color 1ms;
 }
+
+.btn:hover{
+    background-color: lightgray;
+}
+
