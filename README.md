@@ -29,6 +29,7 @@ Pressing the **C** key opens the configuration form, which has the following fie
 * **Opposite side starts timer:** If selected, the opposite click to the one that increments the score will start the timer.
 * **Save to file button:** Will download a .json file with the configuration, it is used as a form of persistent storage.
 * **Load from file button:** Opens up a dialog to upload a .json file created with the previous button and loads the configuration from it.   
+
 *\*It is advised to use the keycode number instead of the string because the font used doesn't distinguish between Upper and Lowercase but keycodes do*
 
 Pressing the **Escape** key closes the configuration form.
