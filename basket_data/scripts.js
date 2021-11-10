@@ -126,6 +126,8 @@ window.addEventListener("load", renderTimer);
 
 submitConfigObj.addEventListener("click", saveAndCloseConf);
 
+document.addEventListener("click", startTimer);
+
 document.addEventListener("keydown", (event) => {
   if( event.key == " " && !isRunning){
     startTimer();
