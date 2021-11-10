@@ -113,14 +113,31 @@ input {
     display: none;
 }
 
+.form{
+    border: 2px white solid;
+    border-radius: 1em;
+    max-height: 95%;
+    overflow-y: auto;
+}
+
 .form>* {
     padding-top: 1em;
     padding-bottom: 1em;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .form-group>*{
     padding-right: 1em;
+}
+
+.form-group>input{
+    width: 50%;
+    height: 100%;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
 }
 
 .submit-btn {
@@ -142,3 +159,67 @@ input {
     background-color: lightgray;
 }
 
+.radio-item-group{
+    padding-left: 1em;
+    padding-right: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-group{
+    display:flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 0em;
+}
+
+p{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.file-btn{
+    border-right:solid black 1px;
+}
+
+.deactivated{
+    color: darkslategray;
+}
+
+input{
+    user-select: auto;
+}
+
+@media (max-width: 900px) { 
+    form>*{
+        display: flex;
+        flex-direction: column;
+        padding-top: 0em !important;
+        padding-bottom: 0em !important;
+    }
+    .form-group>*{
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        padding-left: 0em;
+        padding-right: 0em;
+    }
+
+    p{
+        text-align: center;
+    }
+}
+
+@media (max-width: 750px) { 
+    body{
+        height: auto;
+        overflow-y: auto;
+    }
+    .main{
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+    }
+    .right{
+        align-items: center;
+    }
+}
