@@ -6,13 +6,17 @@ const bouncingTimeDefault = 1500;
 const roundTimeDefault = 50;
 const clickSideDefault = "right";
 const oppositeClickStartDefault = true;
+const filename = "basketCounter_config.json";
 
-var bouncingTime = bouncingTimeDefault;
-var roundTime = roundTimeDefault;
-var startKeyCode = startKeyCodeDefault;
-var stopKeyCode = stopKeyCodeDefault;
-var clickSide = clickSideDefault;
-var oppositeClickStart = oppositeClickStartDefault;
+var conf = new Object;
+conf.bouncingTime = bouncingTimeDefault;
+conf.roundTime = roundTimeDefault;
+conf.startKeyCode = startKeyCodeDefault;
+conf.stopKeyCode = stopKeyCodeDefault;
+conf.clickSide = clickSideDefault;
+conf.oppositeClickStart = oppositeClickStartDefault;
+
+//downloadJson("basketCounter_config.json", JSON.stringify(conf));
 
 //html objects
 const timerObj = document.querySelector('.timer');
@@ -24,6 +28,8 @@ const roundInputObj = document.querySelector('#roundTime');
 const startKeyCodeObj = document.querySelector('#startKeyCode');
 const stopKeyCodeObj = document.querySelector('#stopKeyCode');
 const oppositeClickStartObj = document.querySelector('#oppositeClickStart');
+const saveButton = document.querySelector('#save-btn');
+const loadButton = document.querySelector('#load-btn');
 const submitConfigObj = document.querySelector('.submit-config');
 
 //state
@@ -41,7 +47,7 @@ function startTimer(){
   scoreObj.innerHTML = score;
   maxScoreObj.style.fontSize="0vh";
 
-  var sec = roundTime;
+  var sec = conf.roundTime;
   timerObj.innerHTML= "YA!!";
   sec--;
   isRunning = true;
@@ -69,13 +75,13 @@ function endRound(message){
 }
 
 function incorporateConf(){
-  timerObj.innerHTML = "00:" + roundTime;
-  roundInputObj.value = roundTime;
-  bounceInputObj.value = bouncingTime;
-  startKeyCodeObj.value = startKeyCode;
-  stopKeyCodeObj.value = stopKeyCode;
-  oppositeClickStartObj.checked = oppositeClickStart;
-  document.querySelector(`input[name="clickSide"][value=${clickSide}]`).checked = true;
+  timerObj.innerHTML = "00:" + conf.roundTime;
+  roundInputObj.value = conf.roundTime;
+  bounceInputObj.value = conf.bouncingTime;
+  startKeyCodeObj.value = conf.startKeyCode;
+  stopKeyCodeObj.value = conf.stopKeyCode;
+  oppositeClickStartObj.checked = conf.oppositeClickStart;
+  document.querySelector(`input[name="clickSide"][value=${conf.clickSide}]`).checked = true;
 }
 
 function updateMaxScore(newScore){
@@ -88,7 +94,7 @@ function scoreInc(){
     score++;
     scoreObj.innerHTML = score;
     resting = true;
-    setTimeout( () => { resting = false; }, bouncingTime)
+    setTimeout( () => { resting = false; }, conf.bouncingTime)
   }
 }
 
@@ -105,21 +111,29 @@ function saveAndCloseConf(){
   newBounce = parseInt(bounceInputObj.value);
   newRound = parseInt(roundInputObj.value);
   if( !isNaN(newBounce) ){
-    bouncingTime = newBounce;
+    conf.bouncingTime = newBounce;
   }
   if( !isNaN(newRound) ){
-    roundTime = newRound;
+    conf.roundTime = newRound;
   }
-  startKeyCode = startKeyCodeObj.value || startKeyCodeDefault;
-  stopKeyCode = stopKeyCodeObj.value || stopKeyCodeDefault;
-  clickSide = document.querySelector('input[name="clickSide"]:checked').value;
-  oppositeClickStart = oppositeClickStartObj.checked;
+  conf.startKeyCode = startKeyCodeObj.value || startKeyCodeDefault;
+  conf.stopKeyCode = stopKeyCodeObj.value || stopKeyCodeDefault;
+  conf.clickSide = document.querySelector('input[name="clickSide"]:checked').value;
+  conf.oppositeClickStart = oppositeClickStartObj.checked;
   setTimeout(setupEvtListeners, 100); //Delayed so that the click is not counted
   incorporateConf();
 
   configObj.classList.add("collapsed");
   setTimeout( () => {configObj.classList.add("hidden")}, 100);
   scoreObj.classList.remove("deactivated");
+}
+
+function downloadJson(filename, jsonInput) {
+  var element = document.createElement('a');
+  element.setAttribute('href','data:application/json;charset=utf-8, ' + encodeURIComponent(jsonInput));
+  element.setAttribute('download', filename);
+  document.body.appendChild(element);
+  element.click();
 }
 
 function changeMode( mode ){
@@ -141,10 +155,10 @@ function changeMode( mode ){
 }
 
 function keydownHandler(evt){
-  if( evt.key == startKeyCode && !isRunning){
+  if( evt.key == conf.startKeyCode && !isRunning){
     startTimer();
   }
-  else if( evt.key == stopKeyCode && isRunning){
+  else if( evt.key == conf.stopKeyCode && isRunning){
     endRound("STOP");
   }
   else if (evt.key == "d"){
@@ -177,9 +191,9 @@ function startHandler(evt){
 
 function setupEvtListeners(){
   document.addEventListener("keydown", keydownHandler);
-  document.addEventListener( clickSide == "right" ? "contextmenu" : "click", incrementHandler);
-  if(oppositeClickStart){
-    document.addEventListener( clickSide == "right" ? "click" : "contextmenu", startHandler);
+  document.addEventListener( conf.clickSide == "right" ? "contextmenu" : "click", incrementHandler);
+  if(conf.oppositeClickStart){
+    document.addEventListener( conf.clickSide == "right" ? "click" : "contextmenu", startHandler);
   }
 }
 
@@ -193,5 +207,6 @@ function clearEvtListeners(){
 
 window.addEventListener("load", incorporateConf);
 submitConfigObj.addEventListener("click", saveAndCloseConf);
+saveButton.addEventListener("click", () => {downloadJson(filename, JSON.stringify(conf));} );
 setupEvtListeners();
 
