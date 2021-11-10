@@ -20,12 +20,23 @@ To play again simply press the spacebar once again.
 
 The configuration is minimal and there are intentionally no hints on the screen.  
 
-Pressing A, S and D changes the colour mode of the page:
+Pressing **A**, **S** and **D** changes the colour mode of the page:
 * **D** is dark mode, black background and white letters.
 * **S** is light mode, white background and black letters.
 * **A** is board mode, using the same colours as a basketball board (this is the default).  
 
-Pressing the C key opens a simple form to update the round and bounce time, the round time is the time each player has to play (in seconds), bounce time is the minimum time between two consecutive points (in milliseconds).
+Pressing the **C** key opens the configuration form, which has the following fields:
+* **Bounce time:** The minimum time between two consecutive points (in milliseconds).
+* **Round time:** The time each player has to play before the time runs out (in seconds).
+* **Start key:** The keycode* of the key which starts the timer.
+* **Stop key:** The keycode* of the key which stops the timer and finishes the round.
+* **Click side:** Selects which click (left/right) is used to increment the score.
+* **Opposite side starts timer:** If selected, the opposite click to the one that increments the score will start the timer.
+* **Save to file button:** Will download a .json file with the configuration, it is used as a form of persistent storage.
+* **Load from file button:** Opens up a dialog to upload a .json file created with the previous button and loads the configuration from it.
+*\*It is advised to use the keycode number instead of the string because the font used doesn't distinguish between Upper and Lowercase but keycodes do*
+
+Pressing the **Escape** key closes the configuration form.
 
 ## Downloading
 
