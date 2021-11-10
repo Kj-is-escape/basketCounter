@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="./basket_data/styles.css">
   </head>
   <body>
+
     <div class="main">
 
       <form class="form col config collapsed hidden">
@@ -33,15 +34,15 @@
             </div>
             <div class="radio-item-group">
               <label for="rightClick">Right</label>
-              <input name="clickSide" type="radio" class="form-control" id="rightClick" value="right">
+              <input name="clickSide" type="radio" class="form-control" id="rightClick" value="right" checked>
             </div>
           </div>
         </div>
         <div class="form-group">
           <p for="opositeClickStart">Opposite click starts timer</p>
           <div class="checkbox-item-group">
-            <label for="rightClick">Yes</label>
-            <input type="checkbox" class="form-control" id="opositeClickStart" name="opositeClickStart" value="true">
+            <label for="oppositeClickStart">Yes</label>
+            <input type="checkbox" class="form-control" id="oppositeClickStart" name="oppositeClickStart" value="true">
           </div>
         </div>
         <div class="file-save-group">
@@ -52,23 +53,18 @@
       </form>
 
       <div class="left col">
-        <div class="max-score">
-          Más alto: 100
-        </div>
-        <div class="counter">
-          0
-        </div>
+        <div class="max-score"> Más alto: 100 </div>
+        <div class="counter"> 0 </div>
       </div>
       <div class="right col">
-        <div class="timer">
-          50
-        </div>
+        <div class="timer"> 50 </div>
         <div class="logo">
           <img src="./basket_data/logo_img.png"
             onerror="this.src = 'raw.githubusercontent.com/Kj-is-escape/basketCounter/main/basket_data/logo_img.png'"
           >
         </div>
       </div>
+      
     </div>
 
     <script src="./basket_data/scripts.js"></script>

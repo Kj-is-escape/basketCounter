@@ -1,15 +1,18 @@
-/* TODO: deshabilitar las teclas con la configuracion abierta
-*  agregar ratio button para cambiar el lado del click
-*  cambiar el eventListener si se cambia el lado del click
-*  (idea, sacar el event listener al abrir config y volverlo a poner)
-*/
-
 
 //configuration
-var bouncingTime = 1500;
-var roundTime = 50;
-var startKeyCode = " ";
-var stopKeyCode = "Escape";
+const startKeyCodeDefault = " ";
+const stopKeyCodeDefault = "Escape";
+const bouncingTimeDefault = 1500;
+const roundTimeDefault = 50;
+const clickSideDefault = "right";
+const oppositeClickStartDefault = true;
+
+var bouncingTime = bouncingTimeDefault;
+var roundTime = roundTimeDefault;
+var startKeyCode = startKeyCodeDefault;
+var stopKeyCode = stopKeyCodeDefault;
+var clickSide = clickSideDefault;
+var oppositeClickStart = oppositeClickStartDefault;
 
 //html objects
 const timerObj = document.querySelector('.timer');
@@ -20,27 +23,28 @@ const bounceInputObj = document.querySelector('#bounceTime');
 const roundInputObj = document.querySelector('#roundTime');
 const startKeyCodeObj = document.querySelector('#startKeyCode');
 const stopKeyCodeObj = document.querySelector('#stopKeyCode');
+const oppositeClickStartObj = document.querySelector('#oppositeClickStart');
 const submitConfigObj = document.querySelector('.submit-config');
 
 //state
 var timerInterval; 
 var resting;
 var score = 0;
-var maxScoreNum = 0;
+var maxScore = 0;
 var isRunning = false;
 var darkMode = false;
-var leftClickInc = false;
 
 
 function startTimer(){
-  var sec = roundTime;
   clearInterval(timerInterval);
+  score = 0;
+  scoreObj.innerHTML = score;
+  maxScoreObj.style.fontSize="0vh";
+
+  var sec = roundTime;
   timerObj.innerHTML= "YA!!";
   sec--;
   isRunning = true;
-  maxScoreObj.style.fontSize="0vh";
-  score = 0;
-  scoreObj.innerHTML = "" + score;
 
   timerInterval = setInterval( function(){
       timerObj.innerHTML= "00:" + sec.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
@@ -60,42 +64,41 @@ function endRound(message){
   updateMaxScore(scoreObj.innerHTML);
   timerObj.innerHTML=message;
   timerObj.style.fontSize="23vh";
-  maxScoreObj.innerHTML="Más alto: " + maxScoreNum;
+  maxScoreObj.innerHTML="Más alto: " + maxScore;
   maxScoreObj.style.fontSize="10vh";
 }
 
-function renderTimer(){
+function incorporateConf(){
   timerObj.innerHTML = "00:" + roundTime;
   roundInputObj.value = roundTime;
   bounceInputObj.value = bouncingTime;
   startKeyCodeObj.value = startKeyCode;
   stopKeyCodeObj.value = stopKeyCode;
-  console.log(stopKeyCode, stopKeyCodeObj);
-  console.log(startKeyCode, startKeyCodeObj);
+  oppositeClickStartObj.checked = oppositeClickStart;
+  document.querySelector(`input[name="clickSide"][value=${clickSide}]`).checked = true;
 }
 
 function updateMaxScore(newScore){
-  maxScoreNum = parseInt(newScore) > maxScoreNum ? newScore : maxScoreNum;
-  maxScoreObj.innerHTML = maxScoreNum;
+  maxScore = parseInt(newScore) > maxScore ? newScore : maxScore;
+  maxScoreObj.innerHTML = maxScore;
 }
 
 function scoreInc(){
   if(isRunning && !resting){
     score++;
-    scoreObj.innerHTML = "" + score;
+    scoreObj.innerHTML = score;
     resting = true;
-    var bounce = setInterval( function () {
-      resting = false;
-      bounce = clearInterval(bounce);
-    }, bouncingTime)
+    setTimeout( () => { resting = false; }, bouncingTime)
   }
 }
 
 function openConf(){
+  scoreObj.classList.add("deactivated");
   if(configObj.classList.contains("collapsed")){
     configObj.classList.remove("hidden");
     configObj.classList.remove("collapsed");
   }
+  clearEvtListeners();
 }
 
 function saveAndCloseConf(){
@@ -106,11 +109,17 @@ function saveAndCloseConf(){
   }
   if( !isNaN(newRound) ){
     roundTime = newRound;
-    renderTimer();
   }
+  startKeyCode = startKeyCodeObj.value || startKeyCodeDefault;
+  stopKeyCode = stopKeyCodeObj.value || stopKeyCodeDefault;
+  clickSide = document.querySelector('input[name="clickSide"]:checked').value;
+  oppositeClickStart = oppositeClickStartObj.checked;
+  setTimeout(setupEvtListeners, 100); //Delayed so that the click is not counted
+  incorporateConf();
 
   configObj.classList.add("collapsed");
   setTimeout( () => {configObj.classList.add("hidden")}, 100);
+  scoreObj.classList.remove("deactivated");
 }
 
 function changeMode( mode ){
@@ -131,33 +140,58 @@ function changeMode( mode ){
   }
 }
 
-//Event listeners
-document.body.addEventListener( leftClickInc ? "click" : "contextmenu", (event) => {
-  event.preventDefault();
-  scoreInc();
-  });
-
-window.addEventListener("load", renderTimer);
-
-submitConfigObj.addEventListener("click", saveAndCloseConf);
-
-document.addEventListener("keydown", (event) => {
-  if( event.key == startKeyCode && !isRunning){
+function keydownHandler(evt){
+  if( evt.key == startKeyCode && !isRunning){
     startTimer();
   }
-  if( event.key == stopKeyCode && isRunning){
+  else if( evt.key == stopKeyCode && isRunning){
     endRound("STOP");
   }
-  else if (event.key == "d"){
+  else if (evt.key == "d"){
     changeMode("dark");
   }
-  else if (event.key == "s"){
+  else if (evt.key == "s"){
     changeMode("light");
   }
-  else if (event.key == "a"){
+  else if (evt.key == "a"){
     changeMode("board");
   }
-  else if (event.key == "c"){
+  else if (evt.key == "c"){
     openConf();
   }
-});
+}
+
+function incrementHandler(evt){
+  evt.preventDefault();
+  scoreInc();
+}
+
+function startHandler(evt){
+  evt.preventDefault();
+  if(!isRunning){
+    startTimer();
+  }
+}
+
+//Event listeners
+
+function setupEvtListeners(){
+  document.addEventListener("keydown", keydownHandler);
+  document.addEventListener( clickSide == "right" ? "contextmenu" : "click", incrementHandler);
+  if(oppositeClickStart){
+    document.addEventListener( clickSide == "right" ? "click" : "contextmenu", startHandler);
+  }
+}
+
+function clearEvtListeners(){
+  document.removeEventListener("keydown", keydownHandler);
+  document.removeEventListener( "contextmenu", incrementHandler);
+  document.removeEventListener( "click", incrementHandler);
+  document.removeEventListener( "contextmenu", startHandler);
+  document.removeEventListener( "click", startHandler);
+}
+
+window.addEventListener("load", incorporateConf);
+submitConfigObj.addEventListener("click", saveAndCloseConf);
+setupEvtListeners();
+

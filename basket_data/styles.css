@@ -179,7 +179,11 @@ p{
 }
 
 .file-btn{
-    border:solid black 1px;
+    border-right:solid black 1px;
+}
+
+.deactivated{
+    color: darkslategray;
 }
 
 @media (max-width: 900px) { 
