@@ -40,6 +40,9 @@ var maxScore = 0;
 var isRunning = false;
 var darkMode = false;
 
+function twoDigits( numberToFormat ){
+  return numberToFormat.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
+}
 
 function startTimer(){
   clearInterval(timerInterval);
@@ -53,7 +56,7 @@ function startTimer(){
   isRunning = true;
 
   timerInterval = setInterval( function(){
-      timerObj.innerHTML= "00:" + sec.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
+      timerObj.innerHTML= "00:" + twoDigits(sec);
       sec--;
       if (sec < 1) {
         timerObj.style.fontSize="10vh";
@@ -138,7 +141,7 @@ function closeConf(){
 function getConfFilename(){
   now = new Date();
   return filenameBase + "_" + (now.getMonth()+1) + "_" + now.getDay() + 
-    "_" + now.getHours() + now.getMinutes() + ".json";
+    "_" + twoDigits(now.getHours()) + twoDigits(now.getMinutes()) + ".json";
 }
 
 function downloadJson(filename, jsonInput) {
