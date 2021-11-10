@@ -108,6 +108,7 @@ function openConf(){
     configObj.classList.remove("collapsed");
   }
   clearEvtListeners();
+  setupConfigEvtListeners();
 }
 
 function saveAndCloseConf(){
@@ -132,10 +133,11 @@ function saveConf(){
 }
 
 function closeConf(){
-  setTimeout(setupEvtListeners, 100); //Delayed so that the click is not counted
   configObj.classList.add("collapsed");
   setTimeout( () => {configObj.classList.add("hidden")}, 100);
   scoreObj.classList.remove("deactivated");
+  clearConfigEvtListeners();
+  setTimeout(setupEvtListeners, 100); //Delayed so that the click is not counted
 }
 
 function getConfFilename(){
@@ -203,6 +205,12 @@ function startHandler(evt){
   }
 }
 
+function closeConfigHandler(evt){
+  if(evt.key == "Escape"){
+    closeConf();
+  }
+}
+
 //Event listeners
 
 function setupEvtListeners(){
@@ -211,6 +219,14 @@ function setupEvtListeners(){
   if(conf.oppositeClickStart){
     document.addEventListener( conf.clickSide == "right" ? "click" : "contextmenu", startHandler);
   }
+}
+
+function setupConfigEvtListeners(){
+  document.addEventListener("keydown", closeConfigHandler);
+}
+
+function clearConfigEvtListeners(){
+  document.removeEventListener("keydown", closeConfigHandler);
 }
 
 function clearEvtListeners(){
@@ -244,5 +260,7 @@ loadButton.addEventListener("input", () => {
 
   reader.readAsText(file);
 } );
+
 setupEvtListeners();
+
 
