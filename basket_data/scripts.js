@@ -6,7 +6,7 @@ const bouncingTimeDefault = 1500;
 const roundTimeDefault = 50;
 const clickSideDefault = "right";
 const oppositeClickStartDefault = true;
-const filename = "basketCounter_config.json";
+const filenameBase = "basketCounter";
 
 var conf = new Object;
 conf.bouncingTime = bouncingTimeDefault;
@@ -108,6 +108,11 @@ function openConf(){
 }
 
 function saveAndCloseConf(){
+  saveConf();
+  closeConf();
+}
+
+function saveConf(){
   newBounce = parseInt(bounceInputObj.value);
   newRound = parseInt(roundInputObj.value);
   if( !isNaN(newBounce) ){
@@ -122,10 +127,18 @@ function saveAndCloseConf(){
   conf.oppositeClickStart = oppositeClickStartObj.checked;
   setTimeout(setupEvtListeners, 100); //Delayed so that the click is not counted
   incorporateConf();
+}
 
+function closeConf(){
   configObj.classList.add("collapsed");
   setTimeout( () => {configObj.classList.add("hidden")}, 100);
   scoreObj.classList.remove("deactivated");
+}
+
+function getConfFilename(){
+  now = new Date();
+  return filenameBase + "_" + (now.getMonth()+1) + "_" + now.getDay() + 
+    "_" + now.getHours() + now.getMinutes() + ".json";
 }
 
 function downloadJson(filename, jsonInput) {
@@ -207,6 +220,26 @@ function clearEvtListeners(){
 
 window.addEventListener("load", incorporateConf);
 submitConfigObj.addEventListener("click", saveAndCloseConf);
-saveButton.addEventListener("click", () => {downloadJson(filename, JSON.stringify(conf));} );
+
+saveButton.addEventListener("click", () => {
+  saveConf();
+  downloadJson(getConfFilename(), JSON.stringify(conf));
+} );
+
+loadButton.addEventListener("input", () => {
+  let files = loadButton.files;
+  if (files.length == 0) return;
+  const file = files[0];
+  let reader = new FileReader();
+
+  reader.onload = (e) => {
+      const file = e.target.result;
+      conf = JSON.parse(file);
+      incorporateConf();
+  };
+  reader.onerror = (e) => alert(e.target.error.name);
+
+  reader.readAsText(file);
+} );
 setupEvtListeners();
 
