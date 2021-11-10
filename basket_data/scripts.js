@@ -125,11 +125,11 @@ function saveConf(){
   conf.stopKeyCode = stopKeyCodeObj.value || stopKeyCodeDefault;
   conf.clickSide = document.querySelector('input[name="clickSide"]:checked').value;
   conf.oppositeClickStart = oppositeClickStartObj.checked;
-  setTimeout(setupEvtListeners, 100); //Delayed so that the click is not counted
   incorporateConf();
 }
 
 function closeConf(){
+  setTimeout(setupEvtListeners, 100); //Delayed so that the click is not counted
   configObj.classList.add("collapsed");
   setTimeout( () => {configObj.classList.add("hidden")}, 100);
   scoreObj.classList.remove("deactivated");
